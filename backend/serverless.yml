@@ -6,6 +6,9 @@ plugins:
   - serverless-reqvalidator-plugin
   - serverless-aws-documentation
   - serverless-iam-roles-per-function
+  - serverless-dynamodb-local
+  - serverless-offline
+  - serverless-plugin-tracing
 
 provider:
   name: aws
@@ -14,9 +17,9 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'ap-southeast-2'}
 
-#  tracing:
-#    lambda: true
-#    apiGateway: true
+  tracing:
+    lambda: true
+    apiGateway: true
 
   environment:
     TODOS_TABLE: Todos-${self:provider.stage}
@@ -25,6 +28,14 @@ provider:
     SIGNED_URL_EXPIRATION: 300
     AUTH_0_SECRET_ID: Auth0Secret-${self:provider.stage}
     AUTH_0_SECRET_FIELD: auth0Secret
+
+  iamRoleStatements:
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
 
 custom:
   serverless-offline:

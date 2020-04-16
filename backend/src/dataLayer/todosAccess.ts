@@ -90,13 +90,14 @@ export class TodosAccess {
 }
 
 function createDynamoDBClient() {
-/*  if (process.env.IS_OFFLINE) {
+  if (process.env.IS_OFFLINE) {
     console.log('Creating a local DynamoDB instance')
+    // @ts-ignore
     return new XAWS.DynamoDB.DocumentClient({
       region: 'localhost',
       endpoint: 'http://localhost:8000'
     })
-  } */
+  }
 
   // @ts-ignore
   return new XAWS.DynamoDB.DocumentClient();
