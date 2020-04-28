@@ -25,6 +25,8 @@ npm run start
 API Endpoint
 ```
 https://xhyg3bouxa.execute-api.ap-southeast-2.amazonaws.com/dev/todos
+
+wss://i7wvecwl06.execute-api.ap-southeast-2.amazonaws.com/dev
 ```
 Postman Collection
 ```
