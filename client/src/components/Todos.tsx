@@ -14,7 +14,7 @@ import {
   Loader
 } from 'semantic-ui-react'
 
-import { createTodo, deleteTodo, getTodos, patchTodo } from '../api/todos-api'
+import { createTodo, deleteTodo, getTodos, getWebSocketNotification, patchTodo } from '../api/todos-api'
 import Auth from '../auth/Auth'
 import { Todo } from '../types/Todo'
 
@@ -91,6 +91,18 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
 
   async componentDidMount() {
     try {
+      // connect websocket
+      const socket = getWebSocketNotification(this.props.auth.getIdToken());
+      socket.addEventListener('open', function (event) {
+        alert("WebSocket Connection For Notification Opened");
+      });
+
+      // Listen for messages
+      socket.addEventListener('message', function (event) {
+        alert("notification " + event.data);
+      });
+      //
+
       const todos = await getTodos(this.props.auth.getIdToken())
       this.setState({
         todos,

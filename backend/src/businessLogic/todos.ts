@@ -11,6 +11,10 @@ export async function getAllTodos(userId: string): Promise<TodoItem[]> {
   return todosAccess.getAllTodos(userId)
 }
 
+export async function getTodosByDueDate(date: string): Promise<TodoItem[]> {
+  return todosAccess.getTodosByDueDate(date)
+}
+
 export async function createTodo(
   createTodoRequest: CreateTodoRequest,
   userId: string
@@ -24,7 +28,8 @@ export async function createTodo(
     name: createTodoRequest.name,
     createdAt: new Date().toISOString(),
     done: false,
-    dueDate: createTodoRequest.dueDate
+    dueDate: createTodoRequest.dueDate,
+    dueDateDay: createTodoRequest.dueDate.substring(0, 10)
   })
 }
 

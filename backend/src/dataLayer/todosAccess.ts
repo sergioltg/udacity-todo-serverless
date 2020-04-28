@@ -11,7 +11,8 @@ export class TodosAccess {
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),
     private readonly todosTable = process.env.TODOS_TABLE,
-    private readonly index_userId: string = process.env.TODO_USER_ID_INDEX) {
+    private readonly index_userId: string = process.env.TODO_USER_ID_INDEX,
+    private readonly index_dueDate: string = process.env.TODO_DUE_DATE_INDEX) {
   }
 
   async getAllTodos(userId: string): Promise<TodoItem[]> {
@@ -26,6 +27,22 @@ export class TodosAccess {
       },
       ScanIndexForward: false
     }).promise();
+
+    const items = result.Items;
+    return items as TodoItem[];
+  }
+
+  async getTodosByDueDate(date: string): Promise<TodoItem[]> {
+    console.log('Getting all groups')
+
+    const result = await this.docClient.query({
+      TableName: this.todosTable,
+      IndexName: this.index_dueDate,
+      KeyConditionExpression: 'dueDateDay = :date',
+      ExpressionAttributeValues: {
+        ':date': date.substring(0, 10)
+      }
+    }).promise()
 
     const items = result.Items;
     return items as TodoItem[];
@@ -87,6 +104,8 @@ export class TodosAccess {
       }
     }).promise();
   }
+
+
 }
 
 function createDynamoDBClient() {

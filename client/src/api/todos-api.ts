@@ -1,4 +1,4 @@
-import { apiEndpoint } from '../config'
+import { apiEndpoint, wssEndpoint } from '../config'
 import { Todo } from '../types/Todo';
 import { CreateTodoRequest } from '../types/CreateTodoRequest';
 import Axios from 'axios'
@@ -70,4 +70,10 @@ export async function getUploadUrl(
 
 export async function uploadFile(uploadUrl: string, file: Buffer): Promise<void> {
   await Axios.put(uploadUrl, file)
+}
+
+export function getWebSocketNotification(idToken: string): WebSocket {
+  const socket = new WebSocket(`${wssEndpoint}?Auth=${idToken}`)
+  return socket;
+
 }
