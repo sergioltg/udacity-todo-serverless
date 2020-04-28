@@ -2,7 +2,7 @@
 
 ## Project Components
 - Restful API (Lambda Functions, API Gateway and DynamoDb)
-- WebSocket Connection to notify connected user that a toDo task is due. This is done through a scheduled lambda that process all toDos that are due in the day and send a websocket message to each user containing its toDos items
+- WebSocket Connection to notify connected users that a toDo task is due. This is done through a scheduled lambda that process all toDos that are due in the day and send a websocket message to each user containing its toDos items
 - Client (React)
 
 ## How to run the application
@@ -30,5 +30,5 @@ wss://i7wvecwl06.execute-api.ap-southeast-2.amazonaws.com/dev
 ```
 Postman Collection
 ```
-Udacity Cloud developer capstone.postman_collection.json
+Final Project.postman_collection.json
 ```
